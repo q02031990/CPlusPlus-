@@ -126,16 +126,16 @@ void build_scene(osg::Group *root)
 }
 
 void increase(){
-	carCB->setSpeed(carCB->getSpeed() + 0.1);
+	carCB->setSpeed(carCB->getSpeed() + 0.5);
 }
 
 void decrease(){
-	carCB->setSpeed(carCB->getSpeed() - 0.1);
+	carCB->setSpeed(carCB->getSpeed() - 0.5);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // main()
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 int main()
 {
     // Create the root node of the scenegraph
