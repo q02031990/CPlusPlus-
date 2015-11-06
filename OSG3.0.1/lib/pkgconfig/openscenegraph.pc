@@ -1,0 +1,28 @@
+# pkg-config source file
+
+prefix=c:/users/admini~1/appdata/local/temp/OpenSceneGraph-3.0.1-VS9.0.30729-x86-debug-12741
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: openscenegraph
+Description: 3D scenegraph
+Version: 3.0.1
+Requires: openthreads
+Conflicts:
+Libs: -L${libdir} -losgd \
+                  -losgDBd \
+                  -losgFXd \
+                  -losgGAd \
+                  -losgParticled \
+                  -losgSimd \
+                  -losgTextd \
+                  -losgUtild \
+                  -losgTerraind \
+                  -losgManipulatord \
+                  -losgViewerd \
+                  -losgWidgetd \
+                  -losgShadowd \
+                  -losgAnimationd \
+                  -losgVolumed
+Cflags: -I${includedir}

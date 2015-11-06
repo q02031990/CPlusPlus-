@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="objMan"
 	ProjectGUID="{3ED7A0D1-C32B-4F8C-AA8E-9C452D51B212}"
 	RootNamespace="project1"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="W:\Desktop\VR\OSG3.0.1\include"
+				AdditionalIncludeDirectories="E:\github\CPlusPlus\trunk\OSG3.0.1\include"
 				PreprocessorDefinitions="WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="osgViewerd.lib osgd.lib osgGAd.lib OpenThreadsd.lib osgDBd.lib osgUtild.lib osgParticled.lib"
-				AdditionalLibraryDirectories="W:\Desktop\VR\OSG3.0.1\lib"
+				AdditionalLibraryDirectories="E:\github\CPlusPlus\trunk\OSG3.0.1\lib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>

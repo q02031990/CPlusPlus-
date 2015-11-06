@@ -1,0 +1,14 @@
+# pkg-config source file
+
+prefix=c:/users/admini~1/appdata/local/temp/OpenSceneGraph-3.0.1-VS9.0.30729-x86-debug-12741
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: openscenegraph-osgVolume
+Description: Volume library for Openscenegraph
+Version: 3.0.1
+Requires: openscenegraph-osgUtil openscenegraph-osgDB openscenegraph-osgGA openscenegraph-osg openthreads
+Conflicts:
+Libs: -L${libdir} -losgVolumed
+Cflags: -I${includedir}
