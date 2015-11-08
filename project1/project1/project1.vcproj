@@ -168,9 +168,27 @@
 			<File
 				RelativePath=".\KeyboardHandler.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath="..\..\Uebung1\Uebung1\stdafx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\TischVentilator.cpp"
 				>
 			</File>
 		</Filter>
@@ -181,6 +199,18 @@
 			>
 			<File
 				RelativePath=".\KeyboardHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\KeyHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Uebung1\Uebung1\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Uebung1\Uebung1\targetver.h"
 				>
 			</File>
 		</Filter>

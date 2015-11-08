@@ -46,7 +46,7 @@ public:
 		osg::ref_ptr<osg::PositionAttitudeTransform> transCar = 
 			dynamic_cast<osg::PositionAttitudeTransform*>(node);
 
-		position = transCar->getPosition().x();
+		position = transCar->getPosition().y();
 		transCar->setPosition(osg::Vec3(position+speed,0.0,0.0));
 			traverse(node,nv);
 			
@@ -60,6 +60,7 @@ carCallback* carCB = new carCallback(0.0,0.01);
 //////////////////////////////////////////////////////////////////////////////
 void build_scene(osg::Group *root)
 {
+	//Creat Obj leoman from file legoman.obj
 	osg::Group *legoMan = new osg::Group;
 	osg::ref_ptr<osg::Node> loadedModel = osgDB::readNodeFile("legoman.obj");
 
@@ -99,26 +100,32 @@ void build_scene(osg::Group *root)
 	G_wheel->addDrawable(new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0.0f,0.0f,0.0f),3.0f)));
 
 	// 1.Create transformation nodes for each wheel
-	// 2.Change the position of each wheel
-	// 3.Add the geometrie node to the transformation
-	// 4.Add the transformation node of the wheels to the cars wheel group
 	osg::PositionAttitudeTransform* T_wheel1 = new osg::PositionAttitudeTransform();
 	osg::PositionAttitudeTransform* T_wheel2 = new osg::PositionAttitudeTransform();
 	osg::PositionAttitudeTransform* T_wheel3 = new osg::PositionAttitudeTransform();
 	osg::PositionAttitudeTransform* T_wheel4 = new osg::PositionAttitudeTransform();
+
+	
+	// 2.Change the position of each wheel
 	T_wheel1->setPosition( osg::Vec3(-5,5,-5) );
 	T_wheel2->setPosition( osg::Vec3(5,5,5) );
 	T_wheel3->setPosition( osg::Vec3(-5,5,5) );
 	T_wheel4->setPosition( osg::Vec3(5,5,-5) );
+
+	
+	// 3.Add the geometrie node to the transformation
 	GR_wheels->addChild(T_wheel1);
 	GR_wheels->addChild(T_wheel2);
 	GR_wheels->addChild(T_wheel3);
 	GR_wheels->addChild(T_wheel4);
+	
+	// 4.Add the transformation node of the wheels to the cars wheel group
 	T_wheel1->addChild(G_wheel);
 	T_wheel2->addChild(G_wheel);
 	T_wheel3->addChild(G_wheel);
 	T_wheel4->addChild(G_wheel);
 
+	//Backgroud cho vat the
 	osg::Texture2D* carTexture = load_texture("wood.bmp");
 	osg::StateSet* carState = new osg::StateSet();
 	carState->setTextureAttributeAndModes(0,carTexture,osg::StateAttribute::ON);
@@ -144,9 +151,9 @@ int main()
     // build the scenegraph begining from the root node
     build_scene(root);
 
-    // Construct the viewer.
+    //Construct the viewer.
     osgViewer::Viewer viewer;
-    viewer.setSceneData( root );
+	viewer.setSceneData( root );
     viewer.realize();
     viewer.setCameraManipulator(new osgGA::TrackballManipulator());
 
@@ -163,6 +170,7 @@ int main()
     {
         // fire off the cull and draw traversals of the scene.
         viewer.frame();
+		
 
 		// autoposition wird neu gesetzt
 		//T_car->setPosition( osg::Vec3(alpha,0,0) );
