@@ -1,3 +1,4 @@
+
 #include <osg/ShapeDrawable>
 #include <osg/PositionAttitudeTransform>
 #include <osgGA/TrackballManipulator>
@@ -9,70 +10,33 @@
 
 #include "KeyboardHandler.h"
 
+#include <iostream>
+#include <string>
 
-osg::Texture2D* load_texture(const char* textureName){
-	osg::Texture2D* texture = new osg::Texture2D;
 
-	texture->setDataVariance(osg::Object::DYNAMIC);
-	osg::Image* image = osgDB::readImageFile(textureName);
-	if(!image){
-		std::cout<<"Not load image";
-	}else{
-		texture->setImage(image);
-	}
-	return texture;
-}
 // Create a transformation node for the car
 osg::PositionAttitudeTransform* T_car = new osg::PositionAttitudeTransform();
 
 
 class carCallback: public osg::NodeCallback{
-protected :
-	double position;
-	double speed; 
 
-public:
-	carCallback(double startPosition, double startSpeed){
-		position = startPosition;
-		speed = startSpeed;
-	}
-
-	double getSpeed(){return speed;}
-
-	void setSpeed(double newSpeed){
-		speed = newSpeed;
-	}
-	virtual void operator()(osg::Node* node,osg::NodeVisitor* nv){
-		osg::ref_ptr<osg::PositionAttitudeTransform> transCar = 
-			dynamic_cast<osg::PositionAttitudeTransform*>(node);
-
-		position = transCar->getPosition().y();
-		transCar->setPosition(osg::Vec3(position+speed,0.0,0.0));
-			traverse(node,nv);
-			
-	}
 };
 
-carCallback* carCB = new carCallback(0.0,0.01);
+public:
+	osg::PositionAttitudeTransform* PAT;
+	float Goc_Quay = 90;
+
+carCallback* carCB = new carCallback();
 
 //////////////////////////////////////////////////////////////////////////////
 // MAIN SCENE GRAPH BUILDING FUNCTION
 //////////////////////////////////////////////////////////////////////////////
 void build_scene(osg::Group *root)
 {
-	//Creat Obj leoman from file legoman.obj
-	osg::Group *legoMan = new osg::Group;
-	osg::ref_ptr<osg::Node> loadedModel = osgDB::readNodeFile("legoman.obj");
 
-	if(!loadedModel){
-		std::cout<<" No data loaded"<<std::endl;
-	}else{
-		osgUtil::Optimizer optimizer; 
-		optimizer.optimize(loadedModel.get());
-
-		root->addChild(legoMan);
-		legoMan->addChild(loadedModel);
-	}
+	
+	osg::Group* rotor = new osg::Group();
+	root->addChild(rotor);
 
 	// Add transformation node of the car to the scene
 	root->addChild(T_car);
@@ -82,64 +46,72 @@ void build_scene(osg::Group *root)
 	osg::Group *GR_car = new osg::Group();
 	T_car->addChild(GR_car);
 
-	// Create a geometrie node (Geode) for the cars chassis and add a shape of a box
-	osg::Geode* G_chassis = new osg::Geode();
-	G_chassis->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f,0.0f,0.0f),10.0f)));
+	// tao hinh trụ
+	osg::Geode* G_Cylinder = new osg::Geode();
+	osg::ShapeDrawable* _G_Cylinder = new osg::ShapeDrawable(new osg::Cylinder(osg::Vec3(0.0f,0.0f,0.0f), 5.0f, 45.0f));
+	_G_Cylinder->setColor(osg::Vec4(0.71, 0.39, 0.17, 1.0));
+	G_Cylinder->addDrawable(_G_Cylinder);
 
-	// Add the chassis to the cars group node
-	GR_car->addChild(G_chassis);
+	// Them hinh tru vao chuong trinh
+	GR_car->addChild(G_Cylinder);
 
-	// Create a group node for the wheels of the car
-	osg::Group *GR_wheels = new osg::Group();
 
-	// Add the group node of the wheels to the group node of the complete car
-	GR_car->addChild(GR_wheels);
+	// Tạo hình box TREN
+	osg::Geode* G_box = new osg::Geode();
+	osg::ShapeDrawable* _G_box = new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f,0.0f,30.0f),15.0f));
+	_G_box->setColor(osg::Vec4(0.0, 0.11, 0.60, 1.0));
+	G_Cylinder->addDrawable(_G_box);
 
-	// Create a geometrie node (Geode) for the cars wheels and add a shape of a sphere
-	osg::Geode* G_wheel = new osg::Geode();
-	G_wheel->addDrawable(new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0.0f,0.0f,0.0f),3.0f)));
+	// Them hinh box vao chuong trinh
+	GR_car->addChild(G_box);
 
-	// 1.Create transformation nodes for each wheel
-	osg::PositionAttitudeTransform* T_wheel1 = new osg::PositionAttitudeTransform();
-	osg::PositionAttitudeTransform* T_wheel2 = new osg::PositionAttitudeTransform();
-	osg::PositionAttitudeTransform* T_wheel3 = new osg::PositionAttitudeTransform();
-	osg::PositionAttitudeTransform* T_wheel4 = new osg::PositionAttitudeTransform();
 
+	// Tạo hinh cho chan quat
+	osg::Geode* G_Chan_Quat= new osg::Geode();
+	osg::ShapeDrawable* _G_Chan_Quat = new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0f, 0.0f, -25.0f), 40.0f, 40.0f ,3.0f));
+	_G_Chan_Quat->setColor(osg::Vec4(0.0, 0.11, 0.60, 1.0));
+	G_Chan_Quat->addDrawable(_G_Chan_Quat);
+	GR_car->addChild(G_Chan_Quat);
+
+
+	/*
+	* Tao Rotor
+	*
+	*/
+	// Tạo hình tron
+	osg::Geode* G_Sphere = new osg::Geode();
+	osg::ShapeDrawable* _G_Sphere = new osg::ShapeDrawable(new osg::Sphere(osg::Vec3(0.0f,0.0f,0.0f),6.0f));
+	_G_Sphere->setColor(osg::Vec4(0.0, 0.11, 0.60, 1.0));
+	G_Sphere->addDrawable(_G_Sphere);
+
+
+	// Tạo hinh cho canh quat
+	osg::Geode* G_Canh_Quat= new osg::Geode();
+	osg::ShapeDrawable* _G_Canh_Quat = new osg::ShapeDrawable(new osg::Box(osg::Vec3(4.0f,0.0f,0.0f),0.7f ,60.0f,7.0f));
+	_G_Canh_Quat->setColor(osg::Vec4(0.71, 0.39, 0.17, 1.0));
+	G_Canh_Quat->addDrawable(_G_Canh_Quat);
 	
-	// 2.Change the position of each wheel
-	T_wheel1->setPosition( osg::Vec3(-5,5,-5) );
-	T_wheel2->setPosition( osg::Vec3(5,5,5) );
-	T_wheel3->setPosition( osg::Vec3(-5,5,5) );
-	T_wheel4->setPosition( osg::Vec3(5,5,-5) );
 
+	//quay canh quat
+	PAT = new osg::PositionAttitudeTransform();
+	PAT->setPosition(osg::Vec3(7.0f,0.0f,30.0f));
+	root->addChild(PAT);
 	
-	// 3.Add the geometrie node to the transformation
-	GR_wheels->addChild(T_wheel1);
-	GR_wheels->addChild(T_wheel2);
-	GR_wheels->addChild(T_wheel3);
-	GR_wheels->addChild(T_wheel4);
-	
-	// 4.Add the transformation node of the wheels to the cars wheel group
-	T_wheel1->addChild(G_wheel);
-	T_wheel2->addChild(G_wheel);
-	T_wheel3->addChild(G_wheel);
-	T_wheel4->addChild(G_wheel);
-
-	//Backgroud cho vat the
-	osg::Texture2D* carTexture = load_texture("wood.bmp");
-	osg::StateSet* carState = new osg::StateSet();
-	carState->setTextureAttributeAndModes(0,carTexture,osg::StateAttribute::ON);
-	GR_wheels->setStateSet(carState);
+	PAT->addChild(G_Sphere);
+	PAT->addChild(G_Canh_Quat);
+	PAT->setAttitude(osg::Quat(osg::DegreesToRadians(Goc_Quay),osg::Vec3(10, 0, 0)));
 }
 
-void increase(){
-	carCB->setSpeed(carCB->getSpeed() + 0.5);
+
+void QuaySangTrai(){
+	Goc_Quay = Goc_Quay + 10;
+	PAT->setAttitude(osg::Quat(osg::DegreesToRadians(Goc_Quay),osg::Vec3(0, 0, 0)));
 }
 
-void decrease(){
-	carCB->setSpeed(carCB->getSpeed() - 0.5);
+void QuaySangPhai(){
+	Goc_Quay = Goc_Quay - 10;
+	PAT->setAttitude(osg::Quat(osg::DegreesToRadians(Goc_Quay),osg::Vec3(0, 0, 0)));
 }
-
 //////////////////////////////////////////////////////////////////////////////
 // main()
 /////////////////////////////////////////////////////////////////////////////
@@ -159,8 +131,8 @@ int main()
 
 	keyboardEventHandler* myKeyboardEventhandler = new keyboardEventHandler();
 	viewer.addEventHandler(myKeyboardEventhandler);
-	myKeyboardEventhandler->addFunction('a',increase);
-	myKeyboardEventhandler->addFunction('d',decrease);
+	myKeyboardEventhandler->addFunction('a',QuaySangTrai);
+	myKeyboardEventhandler->addFunction('d',QuaySangPhai);
 	
 
 
@@ -170,14 +142,6 @@ int main()
     {
         // fire off the cull and draw traversals of the scene.
         viewer.frame();
-		
-
-		// autoposition wird neu gesetzt
-		//T_car->setPosition( osg::Vec3(alpha,0,0) );
-        //T_car->setAttitude( osg::Quat(osg::DegreesToRadians(alpha*10.0), osg::Vec3(0,0,1)) );
-	
-		// autoposition wird inkrementiert
-		//alpha+=0.02;
     }
 
     return 0;
