@@ -58,10 +58,10 @@ carCallback* carCB = new carCallback(0.0,0.01);
 //////////////////////////////////////////////////////////////////////////////
 // MAIN SCENE GRAPH BUILDING FUNCTION
 //////////////////////////////////////////////////////////////////////////////
-void build_scene(osg::Group *root)
+void build_scene1(osg::Group *root)
 {
 	//Creat Obj leoman from file legoman.obj
-	osg::Group *legoMan = new osg::Group;
+	/* osg::Group *legoMan = new osg::Group;
 	osg::ref_ptr<osg::Node> loadedModel = osgDB::readNodeFile("legoman.obj");
 
 	if(!loadedModel){
@@ -73,7 +73,7 @@ void build_scene(osg::Group *root)
 		root->addChild(legoMan);
 		legoMan->addChild(loadedModel);
 	}
-
+ */
 	// Add transformation node of the car to the scene
 	root->addChild(T_car);
 	T_car->setUpdateCallback(carCB);
@@ -143,13 +143,13 @@ void decrease(){
 //////////////////////////////////////////////////////////////////////////////
 // main()
 /////////////////////////////////////////////////////////////////////////////
-int main()
+int main1()
 {
     // Create the root node of the scenegraph
     osg::Group *root = new osg::Group;
 
     // build the scenegraph begining from the root node
-    build_scene(root);
+    build_scene1(root);
 
     //Construct the viewer.
     osgViewer::Viewer viewer;
