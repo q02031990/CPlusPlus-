@@ -1,0 +1,22 @@
+﻿Der Buildvorgang wurde am 28.10.2015 17:31:07 gestartet.
+     1>Projekt "C:\Users\Matthias_Rehfeld\Desktop\Übung1\Übung1.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Übung1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Matthias_Rehfeld\Downloads\OpenSceneGraph-3.4.0\OpenSceneGraph-3.4.0\include" /IC:\Users\Matthias_Rehfeld\Desktop\OSG\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Uebung1.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Uebung1.cpp
+         Uebung1.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Matthias_Rehfeld\Desktop\OSG\bin\Uebung1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Matthias_Rehfeld\Desktop\OSG\bin\Uebung1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Matthias_Rehfeld\Desktop\OSG\bin\Uebung1.lib" /MACHINE:X86 Debug\stdafx.obj
+         Debug\Uebung1.obj
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\OpenThreadsd.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgDBd.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgGAd.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgTextd.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgUtild.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgViewerd.lib
+         C:\Users\Matthias_Rehfeld\Desktop\OSG\lib\osgd.lib
+         Übung1.vcxproj -> C:\Users\Matthias_Rehfeld\Desktop\OSG\bin\Uebung1.exe
+     1>Die Erstellung von Projekt "C:\Users\Matthias_Rehfeld\Desktop\Übung1\Übung1.vcxproj" ist abgeschlossen (Build Ziel(e)).
+
+Der Buildvorgang wurde erfolgreich ausgeführt.
+
+Verstrichene Zeit 00:00:05.92
